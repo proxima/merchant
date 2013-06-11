@@ -1,0 +1,54 @@
+<canvas id="myCanvas" width="530" height="530"></canvas>
+
+<script>
+  var c = document.getElementById("myCanvas");
+  var ctx = c.getContext("2d");
+
+  var dark_green = "#06240C"
+  var black = "#000000"
+  var teal = "#33784B"
+  var yellow = "#D7FF00"
+  var ring = "#66996B"
+
+  function draw_background(context)
+  {
+    context.fillStyle = dark_green;
+    context.fillRect(0,0,600,600);
+
+    context.fillStyle = black;
+
+    var buffer = 5;
+    var sector_dim = 100;
+    var sector_cols = 5;
+    var sector_rows = 5;
+
+    var rolling_x = buffer;
+    var rolling_y = buffer;
+    for(var x = 0; x < sector_cols; ++x, rolling_x += (sector_dim + buffer))
+    {
+      rolling_y = buffer;
+      for(var y = 0; y < sector_rows; ++y, rolling_y += (sector_dim + buffer))
+      {
+        context.fillRect(rolling_x, rolling_y, sector_dim, sector_dim);
+      }
+    }
+  }
+
+  draw_background(ctx);
+
+  var $canvas = $('#myCanvas');
+
+  $canvas.click(function(event) {
+    alert('click!');
+  });
+
+  $canvas.bind('mousewheel', function(event) {
+    alert('wheel!');
+  });
+
+  $canvas.bind('DOMMouseScroll', function(event) {
+    alert('scroll!');
+  });
+
+</script>
+
