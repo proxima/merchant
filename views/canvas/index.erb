@@ -1,4 +1,4 @@
-<center><canvas id="myCanvas" width="530" height="530"></canvas></center>
+<canvas id="myCanvas"></canvas>
 
 <script>
   var c = document.getElementById("myCanvas");
@@ -13,14 +13,14 @@
   function draw_background(context)
   {
     context.fillStyle = dark_green;
-    context.fillRect(0,0,600,600);
+    context.fillRect(0,0,c.width,c.height);
 
     context.fillStyle = black;
 
     var buffer = 5;
     var sector_dim = 100;
-    var sector_cols = 5;
-    var sector_rows = 5;
+    var sector_cols = (c.width / (sector_dim + buffer));
+    var sector_rows = (c.height / (sector_dim + buffer));
 
     var rolling_x = buffer;
     var rolling_y = buffer;
@@ -34,8 +34,6 @@
     }
   }
 
-  draw_background(ctx);
-
   var $canvas = $('#myCanvas');
 
   $canvas.click(function(event) {
@@ -48,6 +46,13 @@
 
   $canvas.bind('DOMMouseScroll', function(event) {
     alert('scroll!');
+  });
+
+  $(document).ready(function() {
+    var canvas = document.getElementById("myCanvas");
+    canvas.width = $("#canvas_area").width();
+    canvas.height = $("#canvas_area").height();
+    draw_background(ctx);
   });
 
 </script>
