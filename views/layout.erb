@@ -1,11 +1,17 @@
 <html>
 <head>
+  <link rel="stylesheet" href="merchant.css">
   <script src="jquery-2.0.2.min.js"></script>
   <script src="kinetic-v4.5.4.min.js"></script>
   <title>
     <%= title %>
   </title>
   <body bgcolor="#000000" text="#EEEEEE">
-    <%= yield %>
+  <script src="fb_auth.js"></script>
+  <div id="wrapper">
+    <div id="left_menu"><div id="fb-root"></div><fb:login-button show-faces="true" width="200" max-rows="1"></fb:login-button></div>
+    <div id="canvas_area"><%= yield %></div>
+    <div id="right_menu"></div>
+  </div>
   </body>
 </html>
