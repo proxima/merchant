@@ -39,7 +39,7 @@
             
             var text = new Kinetic.Text({
               x: x,
-              y: y + 5,
+              y: y + 10,
               width: rect_dim,
               text: "" + sector_id,
               fontSize: 24,
@@ -61,14 +61,18 @@
                 case 3: arrow_text = "3"; break;                  
               }
 
+              var pi_over_2 = Math.PI / 2;
+              var arrow_x = (x + (rect_dim / 2) - 11) + (Math.sin(pi_over_2 * exits[j].direction) * (rect_dim / 2.3));
+              var arrow_y = (y + (rect_dim / 2) - 11) + (-Math.cos(pi_over_2 * exits[j].direction) * (rect_dim / 2.3));
+
               var arrow = new Kinetic.Text({
-                x: x,
-                y: y + (25 * j),
+                x: arrow_x,
+                y: arrow_y,
                 width: rect_dim,
                 text: arrow_text,
                 fontSize: 24,
                 fontFamily: 'Webdings',
-                fill: 'black'
+                fill: 'yellow'
               });
 
               layer.add(arrow);
