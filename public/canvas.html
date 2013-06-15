@@ -21,6 +21,9 @@
             var sector_id = data.sector.id;
             var exits = data.sector.exits;
 
+            var stroke_width = 4;
+            var effective_buffer = buffer - stroke_width;
+
             var column = (sector_id - 1) % grid_dim;
             var row    = Math.floor((sector_id - 1) / grid_dim);
 
@@ -62,8 +65,8 @@
               }
 
               var pi_over_2 = Math.PI / 2;
-              var arrow_x = (x + (rect_dim / 2) - 11) + (Math.sin(pi_over_2 * exits[j].direction) * (rect_dim / 2.3));
-              var arrow_y = (y + (rect_dim / 2) - 11) + (-Math.cos(pi_over_2 * exits[j].direction) * (rect_dim / 2.3));
+              var arrow_x = (x + (rect_dim / 2) - (2*stroke_width) - (2*effective_buffer)) + (Math.sin(pi_over_2 * exits[j].direction) * (rect_dim / 2.4)) - 1;
+              var arrow_y = (y + (rect_dim / 2) - (2*stroke_width) - (2*effective_buffer)) + (-Math.cos(pi_over_2 * exits[j].direction) * (rect_dim / 2.3)) - 2;
 
               var arrow = new Kinetic.Text({
                 x: arrow_x,
