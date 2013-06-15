@@ -14,6 +14,11 @@ get "/" do
   erb :"canvas/index"
 end
 
+get "/sectors/:id.json" do
+  content_type :json
+  Sector.find(params[:id]).to_json(:include => :exits)
+end
+
 helpers do
   def title
     if @title

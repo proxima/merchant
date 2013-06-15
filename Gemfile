@@ -1,10 +1,11 @@
 # Gemfile
 source :rubygems
 
-gem "sinatra"
-gem "sqlite3"
 gem "activerecord"
+gem "json"
+gem "sinatra"
 gem "sinatra-activerecord"
+gem "sqlite3"
 
 group :development do
   gem "shotgun"
