@@ -1,3 +1,5 @@
+var facebook_id = null;
+
 // Additional JS functions here
 window.fbAsyncInit = function() {
   FB.init({
@@ -9,7 +11,8 @@ window.fbAsyncInit = function() {
   });
   FB.Event.subscribe('auth.authResponseChange', function(response) {
     if (response.status === 'connected') {
-      testAPI();
+      facebook_id = response.authResponse.userID;
+      console.log('Facebook authenticated as: ' + facebook_id);
     } else if (response.status === 'not_authorized') {
       FB.login();
     } else {
@@ -26,11 +29,4 @@ window.fbAsyncInit = function() {
    js.src = "//connect.facebook.net/en_US/all.js";
    ref.parentNode.insertBefore(js, ref);
 }(document));
-
-function testAPI() {
-  console.log('Welcome!  Fetching your information.... ');
-  FB.api('/me', function(response) {
-     console.log('Good to see you, ' + response.name + '.');
-  });
-}
 
