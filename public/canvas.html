@@ -1,0 +1,108 @@
+<html>
+  <head>
+    <style>
+      body {
+        margin: 0px;
+        padding: 0px;
+        bgcolor: "#000000";
+      }
+    </style>
+    <script src="jquery-2.0.2.min.js"></script>
+    <script src="kinetic-v4.5.4.min.js"></script>
+    <script>
+      var grid_dim = 2;
+      var rect_dim = 100;
+      var buffer = 5;
+
+      for(var i = 1; i < 5; ++i) {
+        $.get("sectors/" + i + ".json", function(data, status) {
+          if(status == "success") {
+            var sector = data.sector;
+            var sector_id = data.sector.id;
+            var exits = data.sector.exits;
+
+            var column = (sector_id - 1) % grid_dim;
+            var row    = Math.floor((sector_id - 1) / grid_dim);
+
+            var x = (column * rect_dim) + ((column + 1) * buffer);
+            var y = (row * rect_dim) + ((row + 1) * buffer);
+
+            var rect = new Kinetic.Rect({
+              x: x,
+              y: y,
+              width: rect_dim,
+              height: rect_dim,
+              fill: 'green',
+              stroke: 'black',
+              strokeWidth: 4
+            });
+            
+            var text = new Kinetic.Text({
+              x: x,
+              y: y + 5,
+              width: rect_dim,
+              text: "" + sector_id,
+              fontSize: 24,
+              fontFamily: 'Calibri',
+              fill: 'white',
+              align: 'center',
+            });
+
+            layer.add(rect);
+            layer.add(text);
+
+            for(var j = 0; j < exits.length; j++) {
+
+              var arrow_text;
+              switch(exits[j].direction) {
+                case 0: arrow_text = "5"; break;
+                case 1: arrow_text = "4"; break;
+                case 2: arrow_text = "6"; break;
+                case 3: arrow_text = "3"; break;                  
+              }
+
+              var arrow = new Kinetic.Text({
+                x: x,
+                y: y + (25 * j),
+                width: rect_dim,
+                text: arrow_text,
+                fontSize: 24,
+                fontFamily: 'Webdings',
+                fill: 'black'
+              });
+
+              layer.add(arrow);
+            }
+
+            layer.draw();     
+          }
+        });
+      }
+    </script>
+    <title>CanvasTest</title>
+  </head>
+  <body>
+    <div id="canvas_container"></div>
+    <script defer="defer">
+      var stage = new Kinetic.Stage({
+        container: 'canvas_container',
+        width: 530,
+        height: 530,
+        draggable: true
+      });
+
+      var layer = new Kinetic.Layer();
+      
+      var zoom = function(e) {
+        var zoomAmount = e.wheelDeltaY * 0.001;
+        layer.setScale(layer.getScale().x + zoomAmount);
+        layer.draw();
+      };
+
+      document.addEventListener("mousewheel", zoom, false);
+
+      stage.add(layer);
+    </script>
+  </body>
+</html>
+
