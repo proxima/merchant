@@ -6,20 +6,19 @@ class Sector < ActiveRecord::Base
   has_many :players
 
   def adjacent_sector?(direction)
-    self.exits.each do |e|
-      if e.direction == direction
-        return true
-      end
-    end
-    false
+    e = Exit.where("source_sector_id = ? AND direction = ?", self.id, direction).limit(1)
+    return e.size > 0
   end
 
   def adjacent_sector(direction)
-    self.exits.each do |e|
-      if e.direction == direction
-        return e.destination
-      end
-    end
+    e = Exit.where("source_sector_id = ? AND direction = ?", self.id, direction).limit(1)
+    return e[0].destination if e.size > 0
+    return nil
+  end
+
+  def galaxy
+    g = Galaxy.where("min_sector_id <= ? AND max_sector_id >= ?", self.id, self.id).limit(1)
+    return g[0] if g.size > 0
     return nil
   end
 end
