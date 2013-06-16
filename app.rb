@@ -19,6 +19,21 @@ get "/sectors/:id.json" do
   Sector.find(params[:id]).to_json(:include => :exits)
 end
 
+get "/players/new" do
+  @races = Race.find(:all)
+  erb :"players/new"
+end
+
+post "/players/new" do
+  @player = Player.new(params[:player])
+  if @player.save
+    redirect "/"
+  else
+    @races = Race.find(:all)
+    erb :"players/new"
+  end
+end
+
 helpers do
   def title
     if @title

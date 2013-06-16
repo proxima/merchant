@@ -1,0 +1,21 @@
+<h1>New Player</h1>
+<form action="/players/new" method="post">
+  <label for="player_name">Name:</label><br/>
+  <input id="player_name" name="player[name]" type="text" value="" />
+  <br/>
+
+  <label for="facebook_id">Facebook ID:</label><br/>
+  <input id="facebook_id" name="player[facebook_id]" type="text" value="" />
+  <br/>
+
+  <label for="race_id">Race:</label><br />
+  <select name="race_id" id="race_id">
+    <% @races.each do |r| %>
+      <option value="<%= r.id %>"><%= r.name %></option>
+    <% end %>
+  </select>
+  <br/>  
+  <br/>
+  <input type="submit" value="Create Player" />
+</form>   
+
