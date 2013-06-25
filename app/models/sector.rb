@@ -29,8 +29,6 @@ class Sector < ActiveRecord::Base
 
     ret = []
 
-    mini_dimension = ((radius * 2) + 1)
-  
     (-radius..radius).each do |row_radius|
       cur_row = []
       (-radius..radius).each do |col_radius|
