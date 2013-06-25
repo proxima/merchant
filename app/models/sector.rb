@@ -43,22 +43,11 @@ class Sector < ActiveRecord::Base
     (-radius..radius).each do |row_radius|
       cur_row = []
       (-radius..radius).each do |col_radius|
-        new_row = (row + row_radius) % g.dimension 
-        new_col = (col + col_radius) % g.dimension
-
-        cur_row << (new_row * g.dimension) + new_col + g.min_sector_id
+        cur_row << (((row + row_radius) % g.dimension) * g.dimension) + ((col + col_radius) % g.dimension) + g.min_sector_id
       end
       ret << cur_row
     end
 
     return ret
-  end
-
-  def self.test(id, radius)
-    s = Sector.find(id)
-    ret = s.surrounding_sectors(radius)
-    ret.each do |r|
-      p r
-    end
   end
 end
