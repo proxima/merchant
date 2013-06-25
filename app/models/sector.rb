@@ -22,19 +22,10 @@ class Sector < ActiveRecord::Base
     return nil
   end
 
-  def to_rowcol
-    g = self.galaxy
-    position = self.id - g.min_sector_id
-    return position / g.dimension, position % g.dimension
-  end
-
   def surrounding_sectors(radius)
     g = self.galaxy
 
-    position = self.id - g.min_sector_id
-
-    row = position / g.dimension 
-    col = position % g.dimension
+    row,col = (self.id - g.min_sector_id).divmod g.dimension
 
     ret = []
 
@@ -48,6 +39,14 @@ class Sector < ActiveRecord::Base
       ret << cur_row
     end
 
+    return ret
+  end
+
+  def local_map
+    ret = []
+    self.surrounding_sectors(2).each do |v|
+      ret << Sector.find(v)
+    end
     return ret
   end
 end
